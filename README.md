@@ -17,11 +17,11 @@ In this project we are given a web-based application that reads RSS feeds.We use
 
  After the page loads,all the tests pass. You can examine each test or each suite seperately by clicking on it. After passing,the test's name is green.
 
-##Libraries,frameworks and tools used in this project
+## Libraries,frameworks and tools used in this project
 * jQuery
 * Jasmine
 * ESLint
 
 
 ---
-   ###### GitHub page: 
+   ###### GitHub page:  https://foteinik.github.io/project-feadreader/
