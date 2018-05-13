@@ -17,6 +17,8 @@
  */
 
 $(() => {
+
+
 	/* This is our first test suite - a test suite just contains
 	 * a related set of tests. This suite is all about the RSS
 	 * feeds definitions, the allFeeds letiable in our application.
@@ -40,9 +42,9 @@ $(() => {
 		 * and that the URL is not empty.
 		 */
 		it('URL is defined and is not empty', () => {
-			allFeeds.forEach((allFeeds) => {
-				expect(allFeeds.url).toBeDefined();
-				expect(allFeeds.url).not.toBe('');
+			allFeeds.forEach((feed) => {
+				expect(feed.url).toBeDefined();
+				expect(feed.url).not.toBe('');
 			});
 
 		});
@@ -53,9 +55,9 @@ $(() => {
 		 * and that the name is not empty.
 		 */
 		it('name is defined and is not empty', () => {
-			allFeeds.forEach((allFeeds) => {
-				expect(allFeeds.url).toBeDefined();
-				expect(allFeeds.url).not.toBe('');
+			allFeeds.forEach((feed) => {
+				expect(feed.name).toBeDefined();
+				expect(feed.name).not.toBe('');
 			});
 		});
 
@@ -65,21 +67,22 @@ $(() => {
 	/* This is our second test suite -it is about the menu's element visibility and
 	 *that menu-icon's funcionality*/
 	describe('The menu', () => {
-
+		let menuIcon=$('.menu-icon-link');
+		let body=$('body');
 		/*This tests ensures the menu element is
 		 * hidden by default. */
 		it('hides the menu element by default', () => {
-			expect($('body').hasClass('menu-hidden')).toBe(true);
+			expect(body.hasClass('menu-hidden')).toBe(true);
 		});
 
 		/* This test ensures the menu changes
 		 * visibility when the menu icon is clicked.*/
 		it('appears the menu element when menu icon is clicked', () => {
-			$('.menu-icon-link').trigger('click');
-			expect($('body').hasClass('menu-hidden')).toBe(false);
+			menuIcon.trigger('click');
+			expect(body.hasClass('menu-hidden')).toBe(false);
 
-			$('.menu-icon-link').trigger('click');
-			expect($('body').hasClass('menu-hidden')).toBe(true);
+			menuIcon.trigger('click');
+			expect(body.hasClass('menu-hidden')).toBe(true);
 		});
 	});
 
@@ -92,38 +95,36 @@ $(() => {
 			});
 		});
 
-
 		/*This test ensures tht when the loadFeed
 		 * function is called and completes its work, there is at least
 		 * a single .entry element within the .feed container.*/
+		it('ensures that .feedcontainer is not empty after loadFeed', () => {
+			expect($('.feed .entry').length).toBeGreaterThan(0);
 
+		});
 	});
-	it('ensures that .feedcontainer is not empty after loadFeed', () => {
-		expect($('.feed').children()).toBeDefined();
-
-	});
-
 
 	/* This is our third test suite -it is about loadFeeds content
 	 after loading	new feed */
 	describe('New Feed Selection', () => {
-
+		let feed=$('.feed');
 
 		/* This test ensures that,when a new feed is loaded
 		 * by the loadFeed function that the content actually changes.
 		 */
 		let firstFeed, secondFeed;
 		beforeEach((done) => {
-			loadFeed(0);
-			firstFeed = allFeeds[0];
-			loadFeed(1);
-			secondFeed = allFeeds[1];
-			done();
+			loadFeed(0,() => {
+				firstFeed = feed.html();
+				loadFeed(1 , ()=> {
+					secondFeed = feed.html();
+					done();
+				});
+			});
 		});
 
-		it('changes the content after loading new feed', (done) => {
+		it('changes the content after loading new feed', () => {
 			expect(firstFeed).not.toEqual(secondFeed);
-			done();
 		});
 	});
 
