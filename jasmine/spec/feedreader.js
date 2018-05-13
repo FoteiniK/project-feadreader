@@ -3,7 +3,7 @@
 /* jshint ignore:end */
 /*jshint esversion: 6 */
 /*globals $:false */
-/*global  expect,it,describe,allFeeds,beforeEach,loadFeed*/
+/*global  jasmine,expect,it,describe,allFeeds,beforeEach,loadFeed*/
 
 
 /* feedreader.js
@@ -17,7 +17,9 @@
  */
 
 $(() => {
-
+	//we increase the jasmine DEFAULT_TIMEOUT_INTERVAL for our async calls
+	//so that jasmine has enough time to know the call got processed.
+	jasmine.DEFAULT_TIMEOUT_INTERVAL = 20000;
 
 	/* This is our first test suite - a test suite just contains
 	 * a related set of tests. This suite is all about the RSS
@@ -128,4 +130,4 @@ $(() => {
 		});
 	});
 
-})();
+});
